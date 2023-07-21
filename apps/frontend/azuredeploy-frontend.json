@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.19.5.34762",
-      "templateHash": "7983226559525258678"
+      "templateHash": "7374584227881956459"
     }
   },
   "parameters": {
@@ -140,7 +140,7 @@
             },
             {
               "name": "BOT_DIRECTLINE_SECRET_KEY",
-              "value": "[listKeys(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('resourceGroupBackend')), 'Microsoft.BotService/botServices/channels', split(parameters('botDirectLineChannelName'), '/')[0], split(parameters('botDirectLineChannelName'), '/')[1]), '2021-03-01').value]"
+              "value": "[listChannelWithKeys(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('resourceGroupBackend')), 'Microsoft.BotService/botServices/channels', split(parameters('botDirectLineChannelName'), '/')[0], split(parameters('botDirectLineChannelName'), '/')[1]), '2021-03-01').setting.sites[0].key]"
             },
             {
               "name": "DATASOURCE_SAS_TOKEN",
