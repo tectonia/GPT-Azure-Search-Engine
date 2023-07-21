@@ -17,9 +17,6 @@ param appServicePlanName string = 'AppServicePlan-Frontend-${uniqueString(resour
 @description('Required. The name of your Bot Service.')
 param botDirectLineChannelName string
 
-@description('Required. The key to the direct line channel of your bot.')
-param botDirectLineChannelKey string
-
 @description('Optional. The name of the resource group where the backend resources (bot etc.) where deployed previously. Defaults to current resource group.')
 param resourceGroupBackend string = resourceGroup().name
 
@@ -63,6 +60,12 @@ resource azureOpenAI 'Microsoft.CognitiveServices/accounts@2023-05-01' existing 
   scope: resourceGroup(resourceGroupOpenAI)
 }
 
+// Existing Bot Direct Channel resource.
+resource botDirectLineChannel 'Microsoft.BotService/botServices/channels@2021-03-01' existing = {
+  name: botDirectLineChannelName
+  scope: resourceGroup(resourceGroupBackend)
+} 
+
 // Create a new Linux App Service Plan.
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
@@ -90,7 +93,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'BOT_DIRECTLINE_SECRET_KEY'
-          value: botDirectLineChannelKey
+          value: botDirectLineChannel.listKeys(botDirectLineChannel.apiVersion).value
         }
         {
           name: 'DATASOURCE_SAS_TOKEN'
