@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.19.5.34762",
-      "templateHash": "7374584227881956459"
+      "templateHash": "10872999321542065113"
     }
   },
   "parameters": {
@@ -37,10 +37,16 @@
         "description": "Optional. The name of the App Service Plan."
       }
     },
-    "botDirectLineChannelName": {
+    "botServiceName": {
       "type": "string",
       "metadata": {
         "description": "Required. The name of your Bot Service."
+      }
+    },
+    "botDirectLineChannelName": {
+      "type": "string",
+      "metadata": {
+        "description": "Required. The name of your Bot Service Direct Line Channel."
       }
     },
     "resourceGroupBackend": {
@@ -136,7 +142,7 @@
           "appSettings": [
             {
               "name": "BOT_SERVICE_NAME",
-              "value": "[parameters('botDirectLineChannelName')]"
+              "value": "[parameters('botServiceName')]"
             },
             {
               "name": "BOT_DIRECTLINE_SECRET_KEY",
